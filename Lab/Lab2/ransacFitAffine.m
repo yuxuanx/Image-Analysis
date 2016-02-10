@@ -1,29 +1,27 @@
 function [A,t] = ransacFitAffine(source_points, target_points, threshold)
 %Ransac to find an affine transformation between two sets of points
-N = 500; % number of samples
-outlier_rate = 0.5;
+N = length(source_points); % number of samples
+outlier_rate = 0.8;
 outlier_percent = (1-outlier_rate)^3;
 iter_num = int32(100/outlier_percent); % number of iteration used in Ransec
-% initialization
-rate = zeros(iter_num,1);
-A_hat = zeros(2,2,iter_num);
-t_hat = zeros(2,1,iter_num);
+bestOutNum = N;
 for i = 1:iter_num
-    index1 = randi(N);
-    index2 = randi(N);
-    index3 = randi(N);
-    source_point = [source_points(:,index1) source_points(:,index2) source_points(:,index3)];
-    target_point = [target_points(:,index1) target_points(:,index2) source_points(:,index3)];
+    index = randperm(N);
+    source_point = [source_points(:,index(1)) source_points(:,index(2)) source_points(:,index(3))];
+    target_point = [target_points(:,index(1)) target_points(:,index(2)) source_points(:,index(3))];
     % for each iteration, randomly choose three points to estimate
     % transformation
-    [A_hat(:,:,i), t_hat(:,:,i)] = estimateAffine(source_point, target_point);
-    absResiduals = absoluteResiduals(A_hat(:,:,i), t_hat(:,:,i), source_points, target_points);
-    rate(i) = length(find(absResiduals > threshold))/N;
+    [A_hat, t_hat] = estimateAffine(source_point, target_point);
+    % calculate absolute residuals
+    absResiduals = absoluteResiduals(A_hat, t_hat, source_points, target_points);
+    % find number of outliers
+    outlierNum = length(find(absResiduals>threshold));
+    % evaluate current model decided whether to update
+    if outlierNum<bestOutNum && isempty(find(isnan(A_hat)==1, 1))
+        bestOutNum = outlierNum;
+        A = A_hat;
+        t = t_hat;
+    end
 end
-% find the one most close to the right number of outliers
-[~,I] = min(abs(rate - outlier_rate));
-A = A_hat(:,:,I);
-t = t_hat(:,:,I);
-rate(I)
 end
 
