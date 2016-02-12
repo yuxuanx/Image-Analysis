@@ -13,7 +13,7 @@ for i = 1:iter_num
     % calculate absolute residuals
     absResiduals = absoluteResiduals(A_hat, t_hat, source_points, target_points);
     % find outliers with least mean square
-    lms = sum(absResiduals(absResiduals > 1000).^2);
+    lms = sum(absResiduals(absResiduals > 420).^2);
     if lms < lmsBest
         A = A_hat;
         t = t_hat;

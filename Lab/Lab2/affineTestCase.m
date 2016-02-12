@@ -9,7 +9,7 @@ A_true = [-2+6*rand -2+6*rand;-2+6*rand -2+6*rand];
 % generate t_true uniformly random in [-10,10]
 t_true = [-10+20*rand;-10+20*rand];
 % replicate to make it the same size as source_pts
-target_pts = A_true*source_pts(:,randperm(N,inlierNum)) + repmat(t_true,1,inlierNum);
+target_pts = A_true*source_pts(:,1:inlierNum) + repmat(t_true,1,inlierNum);
 target_pts = [target_pts,[N*rand(1,outlierNum);N*rand(1,outlierNum)]];
 % percentage of outliers to the output points
 outlier_percent = (1-outlier_rate)^3;

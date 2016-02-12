@@ -17,8 +17,8 @@ index = randperm(500,3);
 absResiduals = absoluteResiduals(A, t, source_pts, target_pts);
 %% Ex 2.7
 clc;clear
-[source_pts, target_pts, A_true, t_true, outlier_percent] = affineTestCase(0.5);
-[A,t] = ransacFitAffine(source_pts, target_pts, 5);
+[source_pts, target_pts, A_true, t_true, outlier_percent] = affineTestCase(0.1);
+[A,t] = ransacFitAffine(source_pts, target_pts, 500);
 %% Ex 2.9 
 clc;clear
 source = readAsGrayScale('images/vermeer_source.png');
