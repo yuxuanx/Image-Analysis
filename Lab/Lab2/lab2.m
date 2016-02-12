@@ -18,13 +18,16 @@ absResiduals = absoluteResiduals(A, t, source_pts, target_pts);
 %% Ex 2.7
 clc;clear
 [source_pts, target_pts, A_true, t_true, outlier_percent] = affineTestCase(0.5);
-[A,t] = ransacFitAffine(source_pts, target_pts, 5);
+[A,t] = ransacFitAffine(source_pts, target_pts, 2);
 %% Ex 2.9 
 clc;clear
 source = readAsGrayScale('images/vermeer_source.png');
 target = readAsGrayScale('images/vermeer_target.png');
 warped = alignImages(source, target);
-switchPlot(warped,target);
+imagesc(warped);
+axis image;
+colormap gray
+% switchPlot(warped,target);
 %% Ex 2.10
 clc;clear
 source = readAsGrayScale('images/CT_1.jpg');
