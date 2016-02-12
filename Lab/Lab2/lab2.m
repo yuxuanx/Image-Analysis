@@ -11,16 +11,14 @@ colormap gray
 %% Ex 2.4
 clc;clear
 [source_pts, target_pts, A_true, t_true, outlier_percent] = affineTestCase(0.5);
-index = randperm(N);
-source_points = [source_pts(:,index(1)) source_pts(:,index(2)) source_pts(:,index(3))];
-target_points = [target_pts(:,index(1)) target_pts(:,index(2)) source_pts(:,index(3))];
-[A, t] = estimateAffine(source_points, target_points);
+index = randperm(500,3);
+[A, t] = estimateAffine(source_pts(:, index), target_pts(:, index));
 %% Ex 2.5
 absResiduals = absoluteResiduals(A, t, source_pts, target_pts);
 %% Ex 2.7
 clc;clear
-[source_pts, target_pts, A_true, t_true, outlier_percent] = affineTestCase(0.8);
-[A,t] = ransacFitAffine(source_pts, target_pts, 5);
+[source_pts, target_pts, A_true, t_true, outlier_percent] = affineTestCase(0.01);
+[A,t] = ransacFitAffine(source_pts, target_pts, 500);
 %% Ex 2.9 
 clc;clear
 source = readAsGrayScale('images/vermeer_source.png');
@@ -33,3 +31,16 @@ source = readAsGrayScale('images/CT_1.jpg');
 target = readAsGrayScale('images/CT_2.jpg');
 warped = alignImages(source, target);
 switchPlot(warped,target);
+%% Ex 2.11
+clc;clear
+source = readAsGrayScale('images/tissue_brightfield.tif');
+target = readAsGrayScale('images/tissue_fluorescent.tif');
+target = 1 - target;
+warped = alignImages(source, target);
+switchPlot(warped,target);
+%% Ex 2.13
+clc;clear
+source = readAsGrayScale('images/source16x16.tif');
+warped = warp16x16(source);
+imagesc(warped);
+colormap gray

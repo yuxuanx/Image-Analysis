@@ -9,7 +9,8 @@ correspondences = matchFeatures(sourceFeatures,targetFeatures, 'MaxRatio', 0.8, 
 matchedSource = sourcePositions(:,correspondences(:, 1));
 matchedTarget = targetPositions(:,correspondences(:, 2));
 % using affine and ransec to derive transformation
-[A,t] = ransacFitAffine(matchedSource, matchedTarget, 5);
+%[A,t] = ransacFitAffine(matchedSource, matchedTarget, 80);
+[A,t] = leastSquaresAffine(matchedSource, matchedTarget);
 % warp the source image 
 warped = affineWarp(size(target), source, A, t);
 
