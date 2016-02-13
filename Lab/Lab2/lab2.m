@@ -24,14 +24,12 @@ clc;clear
 source = readAsGrayScale('images/vermeer_source.png');
 target = readAsGrayScale('images/vermeer_target.png');
 warped = alignImages(source, target);
-imagesc(warped);
-axis image;
-colormap gray
-% switchPlot(warped,target);
+switchPlot(warped,target);
+
 %% Ex 2.10
 clc;clear
-source = readAsGrayScale('images/CT_1.jpg');
-target = readAsGrayScale('images/CT_2.jpg');
+target = readAsGrayScale('images/CT_1.jpg');
+source = readAsGrayScale('images/CT_2.jpg');
 warped = alignImages(source, target);
 switchPlot(warped,target);
 %% Ex 2.11

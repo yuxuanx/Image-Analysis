@@ -3,9 +3,8 @@ function [A,t] = ransacFitAffine(source_points, target_points, threshold)
 N = length(source_points); % number of samples
 outlier_rate = 0.8;
 outlier_percent = (1-outlier_rate)^3;
-% iter_num = int32(100/outlier_percent); % number of iteration used in Ransec
-iter_num = 1e5;
-bestOutNum = N;
+iter_num = int32(100/outlier_percent); % number of iteration used in Ransec
+bestInNum = 0;
 for i = 1:iter_num
     index = randperm(N,3);
     % for each iteration, randomly choose three points to estimate
@@ -14,15 +13,13 @@ for i = 1:iter_num
     % calculate absolute residuals
     absResiduals = absoluteResiduals(A_hat, t_hat, source_points, target_points);
     % find number of outliers
-    outlierNum = length(find(absResiduals>threshold));
+    inlierNum = length(find(absResiduals<=threshold));
     % evaluate current model decided whether to update
-    if outlierNum<bestOutNum && isempty(find(isnan(A_hat)==1, 1))
-        bestOutNum = outlierNum
+    if inlierNum > bestInNum && isempty(find(isnan(A_hat)==1, 1))
+        bestInNum = inlierNum;
         A = A_hat;
         t = t_hat;
-        test = min(absResiduals);
     end
 end
-test
 end
 
