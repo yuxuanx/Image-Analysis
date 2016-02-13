@@ -24,13 +24,14 @@ clc;clear
 source = readAsGrayScale('images/vermeer_source.png');
 target = readAsGrayScale('images/vermeer_target.png');
 warped = alignImages(source, target);
+imwrite(warped,'vermeer_warped.png');
 switchPlot(warped,target);
-
 %% Ex 2.10
 clc;clear
 target = readAsGrayScale('images/CT_1.jpg');
 source = readAsGrayScale('images/CT_2.jpg');
 warped = alignImages(source, target);
+imwrite(warped,'CT_warped.jpg');
 switchPlot(warped,target);
 %% Ex 2.11
 clc;clear
@@ -38,6 +39,7 @@ source = readAsGrayScale('images/tissue_brightfield.tif');
 target = readAsGrayScale('images/tissue_fluorescent.tif');
 target = 1 - target;
 warped = alignImages(source, target);
+imwrite(warped,'tissue_warped.tif');
 switchPlot(warped,target);
 %% Ex 2.13
 clc;clear
