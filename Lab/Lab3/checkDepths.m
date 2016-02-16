@@ -5,7 +5,7 @@ function positive = checkDepths(Ps, X)
 % outputs boolean values
 lambda = true(length(Ps),1); % initialization
 for i = 1:length(Ps)
-    lambdax = Ps{i}'*X;
+    lambdax = Ps{i}*[X;1];
     % make decision based on the last entry
     lambda(i) = lambdax(end);
 end
