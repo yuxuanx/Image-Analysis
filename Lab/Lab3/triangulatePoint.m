@@ -1,8 +1,6 @@
-function [X, nbr_inliers] = ransacTriangulation(Ps, xs, threshold)
-%implements triangulation using Ransac
-% Use the number of outliers as loss function. A measurement is deemed as 
-% an outlier if the depth is negative or if the reprojection error is 
-% larger than threshold.
+function [Xest, loss, nbr_inliers] = triangulatePoint(xs, Ps, threshold)
+%first uses Ransac, then removes outliers and performs five Gauss-Newton 
+%steps on the inliers to refine the Ransac solution.
 iter_num = 1e2; % number of interations
 bestOutliers = Inf; % loss function
 for i = 1:iter_num
@@ -20,5 +18,14 @@ for i = 1:iter_num
         nbr_inliers = length(Ps) - nbr_outliers;
     end
 end
+P = Ps(1,errors <= threshold); % remove outliers
+x = xs(:,errors <= threshold);
+for j = 1:5
+    J = computeJacobian(X, P);
+    residuals = computeResiduals(P, x, X);
+    loss = sum(residuals.^2);
+    X = X - inv(J'*J)*J'*residuals; % update X using Gauss-newton iteration
+end
+Xest = X;
 end
 
