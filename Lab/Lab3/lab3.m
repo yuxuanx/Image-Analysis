@@ -9,3 +9,5 @@ errors = reprojectionErrors(Ps, xs, X_true);
 % ri(X) = (aiX/ciX;biX/ciX)-xi, if ciX > 0
 %% Ex 3.7
 all_residuals = computeResiduals(Ps, xs, X_true);
+%% Ex 3.13
+run('house.m');
