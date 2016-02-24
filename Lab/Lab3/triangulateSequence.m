@@ -1,7 +1,7 @@
 clc;clear
 load('sequence.mat');
 threshold = 5;
-nbr_examples = 5000; % number of cell samples used
+nbr_examples = length(triangulation_examples); % number of cell samples used
 Xlist = zeros(3,1);
 % using for loop to go through triangulation samples
 for i = 1:nbr_examples

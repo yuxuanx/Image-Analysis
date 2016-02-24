@@ -1,7 +1,7 @@
 function [A,t] = ransacFitAffine(source_points, target_points, threshold)
 %Ransac to find an affine transformation between two sets of points
 N = length(source_points); % number of samples
-outlier_rate = 0.8;
+outlier_rate = 0.7;
 outlier_percent = (1-outlier_rate)^3;
 iter_num = int32(100/outlier_percent); % number of iteration used in Ransec
 bestInNum = 0;

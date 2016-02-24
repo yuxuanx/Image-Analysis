@@ -1,15 +1,26 @@
 function [A, t] = leastSquaresAffine(source_points, target_points)
-%estimates an affine transformation mapping source_points to target_points
-% generate matrix M, at least 3 source points are needed to solve equations
-% with 6 unknowns
-M = [source_points(:,1)' 1 0 0 0;0 0 0 source_points(:,1)' 1;...
-    source_points(:,2)' 1 0 0 0;0 0 0 source_points(:,2)' 1;...
-    source_points(:,3)' 1 0 0 0;0 0 0 source_points(:,3)' 1];
-b = reshape(target_points,6,1);
-% linear least square solution
-theta = M\b;
-A = [theta(1) theta(2);theta(4) theta(5)];
-t = [theta(3);theta(6)];
+%uses least squares on the inliers from Ransac to refine the estimate.
+N = length(source_points); % number of samples
+outlier_rate = 0.7;
+outlier_percent = (1-outlier_rate)^3;
+iter_num = int32(100/outlier_percent); % number of iteration used in Ransec
+leastSquares = 0;
+for i = 1:iter_num
+    index = randperm(N,3);
+    % for each iteration, randomly choose three points to estimate
+    % transformation
+    [A_hat, t_hat] = estimateAffine(source_points(:, index), target_points(:, index));
+    % calculate absolute residuals
+    absResiduals = absoluteResiduals(A_hat, t_hat, source_points, target_points);
+    % find least squares
+    ls = sum(absResiduals(absResiduals<=1).^2);
+    % evaluate current model decided whether to update
+    if ls > leastSquares && isempty(find(isnan(A_hat)==1, 1))
+        leastSquares = ls;
+        A = A_hat;
+        t = t_hat;
+    end
+end
 
 end
 
