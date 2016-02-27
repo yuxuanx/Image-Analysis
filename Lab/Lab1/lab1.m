@@ -7,6 +7,6 @@
 % plotSquares(img, [100,100]);
 
 %% Digit classification
-[ grayImage ] = readAsGrayScale( 'church10.jpg' );
+[ grayImage ] = readAsGrayScale( 'church_images/church10.jpg' );
 load('church_data.mat');
 [label, name] = classifyChurch(grayImage, feature_collection);

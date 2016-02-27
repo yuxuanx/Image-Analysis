@@ -8,6 +8,6 @@ patch = getPatch( image, centres(:,i), halfwidths(i) );
 histogram(i,:) = gradientHistogram(vertical_derivative, horizontal_derivative);
 end
 histograms = reshape(histogram,8*9,1); % stack the histograms into a longer vector
-desc = histograms/max(histograms); % normalization
+desc = histograms/norm(histograms); % normalization
 end
 

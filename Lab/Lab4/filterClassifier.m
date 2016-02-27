@@ -7,6 +7,6 @@ filterResponse = imfilter(image, f, 'symmetric');
 y = filterResponse + c;
 % sends it through a soft-max function
 p = exp(y)./(1+exp(y));
-
+p = softmax(p);
 end
 

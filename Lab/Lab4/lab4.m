@@ -1,8 +1,7 @@
 %% Ex 4.2
 cellImage = readAsGrayScale( 'CNN/dataset/bloodcells/bloodcells_1.png' );
 f = zeros(29); % filter choosing
-f(1,1) = 1;f(1,29) = -1;f(29,1) = -1;f(29,29) = 1;
-c = 5; % threshold choosing
+c = 0; % threshold choosing
 p = filterClassifier(f, c, cellImage);
 
 %% Ex 4.3
@@ -19,4 +18,8 @@ plot(col_coords, row_coords,'y*');
 load('training_data.mat');
 img = preProcess(img);
 
-%% 
+%% Ex 4.7
+[examples, labels] = extractExamples(img, positives, negatives);
+
+%% Ex 4.8
+[fgrad] = partialGradient(f, c, examples{1}, labels(1));
