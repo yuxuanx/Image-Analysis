@@ -4,7 +4,8 @@ N = length(source_points); % number of samples
 outlier_rate = 0.7;
 outlier_percent = (1-outlier_rate)^3;
 iter_num = int32(100/outlier_percent); % number of iteration used in Ransec
-leastSquares = 0;
+leastSquares = Inf;
+threshold = 2;
 for i = 1:iter_num
     index = randperm(N,3);
     % for each iteration, randomly choose three points to estimate
@@ -13,9 +14,9 @@ for i = 1:iter_num
     % calculate absolute residuals
     absResiduals = absoluteResiduals(A_hat, t_hat, source_points, target_points);
     % find least squares
-    ls = sum(absResiduals(absResiduals<=1).^2);
+    ls = sum(min(absResiduals, ones(1, length(absResiduals))*threshold));
     % evaluate current model decided whether to update
-    if ls > leastSquares && isempty(find(isnan(A_hat)==1, 1))
+    if ls < leastSquares && isempty(find(isnan(A_hat)==1, 1))
         leastSquares = ls;
         A = A_hat;
         t = t_hat;

@@ -22,4 +22,4 @@ img = preProcess(img);
 [examples, labels] = extractExamples(img, positives, negatives);
 
 %% Ex 4.8
-[fgrad] = partialGradient(f, c, examples{1}, labels(1));
+[fgrad, cgrad] = partialGradient(f, c, examples{1}, labels(1));
