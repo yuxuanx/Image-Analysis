@@ -15,6 +15,7 @@ plot(col_coords, row_coords,'y*');
 % centered at (u, v) with the same size of the filter
 
 %% Ex 4.5
+clc;clear
 load('training_data.mat');
 img = preProcess(img);
 
@@ -33,8 +34,18 @@ for i = 1:10
     [f, c] = doEpoch(f, c, examples, labels);
 end
 
+%% Ex 4.12 (momentum)
+% initialization
+f = zeros(29);
+c = 0; 
+% run 10 epochs on the training examples
+for i = 1:10
+    [f, c] = momentum(f, c, examples, labels);
+end
+
 %% Ex 4.11
 load('validation_image.mat');
 image = preProcess(image_validation);
 probmap = filterClassifier(f, c, image);
 viewWithOverlay(image, probmap);
+
