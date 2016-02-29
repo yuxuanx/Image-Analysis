@@ -23,3 +23,18 @@ img = preProcess(img);
 
 %% Ex 4.8
 [fgrad, cgrad] = partialGradient(f, c, examples{1}, labels(1));
+
+%% Ex 4.10
+% initialization
+f = zeros(29);
+c = 0; 
+% run 10 epochs on the training examples
+for i = 1:10
+    [f, c] = doEpoch(f, c, examples, labels);
+end
+
+%% Ex 4.11
+load('validation_image.mat');
+image = preProcess(image_validation);
+probmap = filterClassifier(f, c, image);
+viewWithOverlay(image, probmap);

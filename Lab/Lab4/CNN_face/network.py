@@ -16,7 +16,8 @@ def setup(input_var, box_size = 29,):
             nonlinearity = lasagne.nonlinearities.rectify)
 
     net = lasagne.layers.MaxPool2DLayer(net, pool_size=(2, 2))
-
+    
+    
     # last stage: stanard 2-layer fully connected neural network with 50% dropout
     net = lasagne.layers.DenseLayer(
             lasagne.layers.dropout(net, p=.5),

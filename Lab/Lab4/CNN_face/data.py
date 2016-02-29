@@ -47,19 +47,17 @@ def generate(data_type="train",
              sample_radius=2,
              enable_plotting=False):
 
-    root = os.path.abspath('dataset/bloodcells/')
+    root = os.path.abspath('face_data/')
 
     if not box_size % 2 == 1:
         raise Exception("Please choose odd box_size")
 
     if data_type == "train":
-        im_path = root + '/bloodcells_1.png'
-        centres_path = root + '/annotations/bloodcells_1.mat'
-        neg_path = root + '/annotations/negative_samples_1.mat'
+        im_path = root + '/face_train.png'
+        centres_path = root + '/face_train.mat'
     elif data_type == "validation":
-        im_path = root + '/bloodcells_2.png'
-        centres_path = root + '/annotations/bloodcells_2.mat'
-        neg_path = root + '/annotations/negative_samples_2.mat'
+        im_path = root + '/face_valid.png'
+        centres_path = root + '/face_valid.mat'
     else:
         raise Exception('Data type is either "train" or "validation"')
 
@@ -74,13 +72,7 @@ def generate(data_type="train",
     centres = matlab_data['centres']
     distance_to_positive = make_distance_map(img.shape, centres)
 
-    # Load negative samples
-    matlab_data = matlabIo.loadmat(neg_path)
-    negative_centres = matlab_data['centres']
-    distance_to_negative = make_distance_map(img.shape, negative_centres)
-
-
-    # Positive samples within sample_radius from a cell centre.
+    # Positive samples within sample_radius from a face centre.
     samples = []
     labels = []
     for x in xrange(image_border_margin, img.shape[0] - image_border_margin):
@@ -89,19 +81,11 @@ def generate(data_type="train",
                 samples.append((x, y))
                 labels.append(1)
 
-    # Negative samples within sample_radius from negative annotated points
     nbr_positives = len(samples)
 
-    for x in xrange(image_border_margin, img.shape[0] - image_border_margin):
-        for y in xrange(image_border_margin, img.shape[1] - image_border_margin):
-            if (distance_to_negative[x][y] < sample_radius):
-                samples.append((x, y))
-                labels.append(0)
-
-
-    # Random negative samples at distance > sample_radius from cell centres
+    # Random negative samples at distance > sample_radius from face centres
     offset = len(samples)
-    while len(samples) - offset < nbr_positives:
+    while len(samples) - offset < 2*nbr_positives:
         x = random.randint(image_border_margin, img.shape[0] - image_border_margin)
         y = random.randint(image_border_margin, img.shape[1] - image_border_margin)
 

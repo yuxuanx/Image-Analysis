@@ -36,4 +36,4 @@ end
 
 [X_new,removed_indices] = cleanForPlot(X_new);
 colorInfo_new(removed_indices,:) = [];
-scatter3(X_new(2,:),X_new(3,:),X_new(1,:),1,colorInfo_new);
+scatter3(X_new(2,:),X_new(3,:),X_new(1,:),2,colorInfo_new);
