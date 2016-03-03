@@ -38,9 +38,11 @@ end
 % initialization
 f = zeros(29);
 c = 0; 
+gamma = 0.7; % size of momentum
+mu = 0.01; % learning rate
 % run 10 epochs on the training examples
 for i = 1:10
-    [f, c] = momentum(f, c, examples, labels);
+    [f, c] = momentum(f, c, examples, labels, gamma, mu);
 end
 
 %% Ex 4.11
@@ -48,4 +50,4 @@ load('validation_image.mat');
 image = preProcess(image_validation);
 probmap = filterClassifier(f, c, image);
 viewWithOverlay(image, probmap);
-
+colormap gray
