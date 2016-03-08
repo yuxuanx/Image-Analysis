@@ -11,12 +11,13 @@ def setup(input_var, box_size = 29,):
     # stage 1 : filter bank -> squashing -> max-pooling
     net = lasagne.layers.Conv2DLayer(
             net,
-            num_filters=7,
+            num_filters=7,  # here we increase the number of filters and the size of the filter
             filter_size=(5, 5),
             nonlinearity = lasagne.nonlinearities.rectify)
 
     net = lasagne.layers.MaxPool2DLayer(net, pool_size=(2, 2))
 
+    # here we add 1 more Conv2DLayer
     net = lasagne.layers.Conv2DLayer(
             net,
             num_filters=3,

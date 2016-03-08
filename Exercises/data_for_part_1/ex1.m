@@ -38,8 +38,8 @@ d = det(C); % always 0
 % generated filter is a convolution of two vectors. A N * N filter should be
 % expressed as the outer product of two vectors to make it seperable. 
 %% Ex 1.12
-% a two-dimensional Gaussian image has projections that are also Gaussians. 
-% The image and projection Gaussians have the same standard deviation. 
+% a two-dimensional Gaussian filter has projections that are also Gaussians. 
+% The filter and projection Gaussians have the same standard deviation. 
 
 % Filtering an M-by-N image with a P-by-Q filter kernel requires roughly 
 % MNPQ multiplies and adds (assuming we aren't using an implementation 

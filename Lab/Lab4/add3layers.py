@@ -17,6 +17,8 @@ def setup(input_var, box_size = 29,):
 
     net = lasagne.layers.MaxPool2DLayer(net, pool_size=(2, 2))
 
+
+    # here we add 2 more Conv2DLayers and 1 more MaxPool2DLayer
     net = lasagne.layers.Conv2DLayer(
             net,
             num_filters=5,

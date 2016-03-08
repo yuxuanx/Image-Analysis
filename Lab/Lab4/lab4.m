@@ -1,7 +1,12 @@
 %% Ex 4.2
+load('cellFilter');
+f = imresize(filt,29/25);
+f = f/norm(f);
+c = -1;
+
 cellImage = readAsGrayScale( 'CNN/dataset/bloodcells/bloodcells_1.png' );
-f = zeros(29); % filter choosing
-c = 0; % threshold choosing
+% f = zeros(29); % filter choosing
+% c = 0; % threshold choosing
 p = filterClassifier(f, c, cellImage);
 
 %% Ex 4.3
@@ -38,7 +43,7 @@ end
 % initialization
 f = zeros(29);
 c = 0; 
-gamma = 0.7; % size of momentum
+gamma = 0.9; % size of momentum
 mu = 0.01; % learning rate
 % run 10 epochs on the training examples
 for i = 1:10
