@@ -25,9 +25,9 @@ for j = 1:5
     residuals = computeResiduals(P, x, X);
     loss = sum(residuals.^2);
     X = X - inv(J'*J)*J'*residuals; % update X using Gauss-newton iteration
-    ers = reprojectionErrors(Ps, xs, X);
-    P = Ps(1,ers <= threshold); % remove outliers
-    x = xs(:,ers <= threshold);
+    ers = reprojectionErrors(P, x, X);
+    P = P(1,ers <= threshold); % remove outliers
+    x = x(:,ers <= threshold);
     if length(find(ers > threshold)) < 2
         break
     end

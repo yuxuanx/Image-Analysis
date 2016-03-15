@@ -3,11 +3,11 @@ load('line_data');
 [a,b,c] = ransacFitLine(edge_points, 100);
 plotLineAndPoints(img, a, b, c, edge_points);
 %% Ex 4.5
-% number of iterations = 100/(1-0.9)^2
+% number of iterations = 100/(1-0.9)^100
 %% Ex 4.6
 load('eye_data');
-[rowcoords, colcoords] = find(edge(gaussianFilter(img, 3)));
-points = [rowcoords'; colcoords'];
+% [rowcoords, colcoords] = find(edge(gaussianFilter(img, 3)));
+points = edge_points;
 n = 10000; % iteration time
 loss = zeros(1,n);
 Centre = zeros(2,n);
@@ -18,7 +18,7 @@ for i = 1:n
     Centre(:,i) = (points(:,P(1)) + points(:,P(2)))/2;
     Radius(i) = norm(points(:,P(1)) - points(:,P(2)))/2;
     distances = sqrt((points(1,:) - Centre(1)).^2 + (points(2,:) - Centre(2)).^2);
-    loss(i) = length(find(distances > 50));
+    loss(i) = length(find(abs(distances - Radius(i)) > 10));
 end
 [~,I] = min(loss);
 centre = Centre(:,I);
