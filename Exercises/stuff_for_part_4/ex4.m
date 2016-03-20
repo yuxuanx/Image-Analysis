@@ -5,6 +5,7 @@ plotLineAndPoints(img, a, b, c, edge_points);
 %% Ex 4.5
 % number of iterations = 100/(1-0.9)^100
 %% Ex 4.6
+% randomly choose three points to form a circle *****
 load('eye_data');
 % [rowcoords, colcoords] = find(edge(gaussianFilter(img, 3)));
 points = edge_points;

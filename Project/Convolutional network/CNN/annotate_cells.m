@@ -1,12 +1,14 @@
-function coords = annotate_cells(img, points_in)
-
+function coords = annotate_cells(img)
+    % coords = annotate_cells(img)
+    % Use space to enter input mode.
+    % Move the cursor to the point you want to annotate.
+    % Use the mouse button or space to make an annotation there.
+    % If you did a mistake you can use backspace to remove the last point.
+    % Press x to exit.
+    
     doinput = false;
-      
-    if nargin < 2
-       points_in = zeros(2,0);
-    end
-        
-    coords = points_in;
+              
+    coords = zeros(2,0);
     fig = figure('KeyPressFcn',@(obj,evt) 0); 
 	clf;
     imagesc(img)
