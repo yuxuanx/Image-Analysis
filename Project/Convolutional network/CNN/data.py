@@ -103,7 +103,7 @@ def generate(data_type="train",
                 labels.append(0)
 
 
-    # Random negative samples at distance > sample_radius from cell centres
+    #Random negative samples at distance > sample_radius from cell centres
     offset = len(samples)
     while len(samples) - offset < nbr_positives:
         x = random.randint(image_border_margin, img.shape[0] - image_border_margin)
@@ -111,7 +111,7 @@ def generate(data_type="train",
 
         d = distance_to_positive[x, y]
 
-        if d > sample_radius:
+        if d > 10:
             samples.append((x, y))
             labels.append(0)
 
